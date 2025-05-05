@@ -1,0 +1,14 @@
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.AssemblyInfoInputs.cache
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.AssemblyInfo.cs
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.csproj.CoreCompileInputs.cache
+D:\Documents\_Development\csharp\cfcrpg-teste\bin\Debug\net9.0\cfcrpg-teste.exe
+D:\Documents\_Development\csharp\cfcrpg-teste\bin\Debug\net9.0\cfcrpg-teste.deps.json
+D:\Documents\_Development\csharp\cfcrpg-teste\bin\Debug\net9.0\cfcrpg-teste.runtimeconfig.json
+D:\Documents\_Development\csharp\cfcrpg-teste\bin\Debug\net9.0\cfcrpg-teste.dll
+D:\Documents\_Development\csharp\cfcrpg-teste\bin\Debug\net9.0\cfcrpg-teste.pdb
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.dll
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\refint\cfcrpg-teste.dll
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.pdb
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.genruntimeconfig.cache
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\ref\cfcrpg-teste.dll

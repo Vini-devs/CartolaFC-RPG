@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 
-public class Time
+public class TimeDTO
 {
     public int Id { get; set; }
     public string Nome { get; set; }
-    public string Sigla { get; set; }
-    public string UrlEscudo { get; set; }
-    public List<Jogador> Jogadores { get; set; } = new List<Jogador>();
-
-    // Estatísticas agregadas opcionais
+    public List<int> JogadoresIds { get; set; } = new List<int>();
     public int GolsFeitos { get; set; }
     public int GolsSofridos { get; set; }
     public int Vitorias { get; set; }

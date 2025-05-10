@@ -2,18 +2,19 @@ namespace CartolaFCRPG.Models
 {
     public class Jogador
     {
+        public PerfilTatico Perfil { get; set; }
         public Time Time { get; set; }
         public string Nome { get; set; }
-        public PosicaoCampo PosicaoAtual { get; set; }
+        public PosicaoCampo PosicaoAtual { get; set; } // fica so no DTO
 
         // Apenas atributos relevantes à movimentação aqui
         public int Ritmo { get; set; } // velocidade de movimentação
         public int Conducao { get; set; } // habilidade de manter a bola
 
-        public Jogador(string nome, PosicaoCampo posicao, int ritmo, int conducao)
+        public Jogador(string nome, PosicaoCampo posicaoInicial, int ritmo, int conducao)
         {
             Nome = nome;
-            PosicaoAtual = posicao;
+            PosicaoAtual = posicaoInicial;
             Ritmo = ritmo;
             Conducao = conducao;
         }

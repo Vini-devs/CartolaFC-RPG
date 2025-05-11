@@ -1,21 +1,30 @@
-public namespace CartolaFCRPG.utils {
-// essas probabilidades estão errads pq dependem do perfiltatico e de ter a posse de bola
+using CartolaFCRPG.Models;
+
+namespace CartolaFCRPG.utils
+{
+    // no caso da movimentação, as probabilidades dependem do perfiltatico e de ter a posse de bola
     public class DecisorComBola
     {
         private readonly Random _rand = new();
 
-        public AcaoComBola EscolherAcaoComBola(Jogador jogador, Zona zonaAtual, List<Jogador> companheiros, List<Jogador> oponentes)
+        public AcaoComBola EscolherAcaoComBola(
+            Jogador jogador,
+            List<Jogador> companheiros,
+            List<Jogador> oponentes
+        )
         {
             var acoes = new List<(AcaoComBola acao, int peso)>();
 
             // Exemplo de lógica contextual:
-            if (zonaAtual == Zona.GrandeAreaAdversaria)
+            if (jogador.PosicaoAtual.Zona == (ZonaCampoVertical)1) //1
             {
-                acoes.Add((AcaoComBola.Chutar, jogador.PrecisaoFinalizacao + jogador.Mentalidade / 2));
+                acoes.Add(
+                    (AcaoComBola.Chutar, jogador.PrecisaoFinalizacao + jogador.Mentalidade / 2)
+                );
                 acoes.Add((AcaoComBola.Passar, jogador.PrecisaoPasse));
                 acoes.Add((AcaoComBola.Conduzir, jogador.Tecnica / 2));
             }
-            else if (zonaAtual == Zona.MeioCampo)
+            else if (jogador.PosicaoAtual.Zona == (ZonaCampoVertical)2)
             {
                 acoes.Add((AcaoComBola.Passar, jogador.PrecisaoPasse + 10));
                 acoes.Add((AcaoComBola.Conduzir, jogador.Tecnica));
@@ -49,21 +58,19 @@ public namespace CartolaFCRPG.utils {
         }
     }
 
-
-
     public class DecisorSemBola
     {
         private readonly Random _rand = new();
 
-        public AcaoSemBola EscolherAcaoSemBola(Jogador jogador, Zona zonaAtual, PosicaoCampo bolaPosicao)
+        public AcaoSemBola EscolherAcaoSemBola(Jogador jogador, PosicaoCampo bolaPosicao)
         {
             // Exemplo: se estiver longe da bola, mais chances de se mover
-            int distancia = jogador.PosicaoCampo.CalcularDistancia(bolaPosicao);
+            int distancia = jogador.PosicaoAtual.CalcularDistancia(bolaPosicao);
 
             var acoes = new List<(AcaoSemBola acao, int peso)>
             {
                 (AcaoSemBola.MoverSe, distancia > 1 ? 90 : 50),
-                (AcaoSemBola.FicarParado, 100 - (distancia > 1 ? 90 : 50))
+                (AcaoSemBola.FicarParado, 100 - (distancia > 1 ? 90 : 50)),
             };
 
             return Sorteia(acoes);

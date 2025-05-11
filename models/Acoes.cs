@@ -1,20 +1,21 @@
-namespace CartolaFCRPG.Models {
+namespace CartolaFCRPG.Models
+{
     public enum AcaoComBola
     {
         FicarParado,
         Conduzir,
         Passar,
-        Chutar
+        Chutar,
     }
 
     public enum AcaoSemBola
     {
         FicarParado,
-        MoverSe
+        MoverSe,
     }
 
-    public enum PerfilTatico {
-        
+    public enum PerfilTatico
+    {
         Zagueiro,
         LateralEsquerdo,
         LateralDireito,
@@ -24,7 +25,6 @@ namespace CartolaFCRPG.Models {
         AlaDireito,
         PontaEsquerda,
         PontaDireita,
-        Atacante
-
+        Atacante,
     }
 }

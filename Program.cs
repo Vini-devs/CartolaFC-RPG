@@ -20,7 +20,6 @@ public class Program
             jogador.PosicaoAtual = PosicoesIniciais.GetPosicaoInicial(jogador.Perfil);
         }
 
-
         // Movimentações
         Movimentacao.MoverJogadorVertical(jogador, 1); // Avançar uma zona
         Movimentacao.MoverJogadorLateral(jogador, -1); // Ir para a esquerda

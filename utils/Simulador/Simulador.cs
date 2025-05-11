@@ -1,3 +1,5 @@
+using CartolaFCRPG.Models;
+
 namespace CartolaFCRPG.utils
 {
     public class SimuladorPartida
@@ -28,8 +30,14 @@ namespace CartolaFCRPG.utils
 
         private void Tick()
         {
+            // passos
+            // 1. Executa a ação do jogador com a bola
+            // 1.2 atualizar a posse
+            // 2. Movimenta todos os jogadores (ou deixa-os parados)
+            // 3. Loga eventos e salva o estado atual
+
             // 1. O jogador com a bola decide o que fazer
-            AvaliarAcaoDoJogadorComBola();
+            ExecutarAcaoDoJogadorComBola();
 
             // 2. Jogadores adversários podem interceptar ou desarmar
             ResolverIntercepcoes();
@@ -44,11 +52,11 @@ namespace CartolaFCRPG.utils
             LogEventos();
         }
 
-
-        private void AvaliarAcaoDoJogadorComBola()
+        private void ExecutarAcaoDoJogadorComBola()
         {
             var jogador = _posse.JogadorComBola;
-            if (jogador == null) return;
+            if (jogador == null)
+                return;
 
             var acao = jogador.DecidirAcao(_campo, _posse);
 
@@ -90,7 +98,6 @@ namespace CartolaFCRPG.utils
             // Já é tratado na lógica de interceptação ou passe mal-sucedido
         }
 
-
         private void ExecutarMovimentacoes()
         {
             foreach (var jogador in _jogadores)
@@ -103,11 +110,9 @@ namespace CartolaFCRPG.utils
             }
         }
 
-
         private void LogEventos()
         {
             // Exemplo: registrar ações, trocas de posse, gols, etc.
         }
-
     }
 }

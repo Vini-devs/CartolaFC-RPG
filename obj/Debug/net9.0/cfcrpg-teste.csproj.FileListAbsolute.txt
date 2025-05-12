@@ -12,3 +12,4 @@ D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\refint\cfcrpg-tes
 D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.pdb
 D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.genruntimeconfig.cache
 D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\ref\cfcrpg-teste.dll
+D:\Documents\_Development\csharp\cfcrpg-teste\obj\Debug\net9.0\cfcrpg-teste.sourcelink.json

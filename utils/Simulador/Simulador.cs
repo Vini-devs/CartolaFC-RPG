@@ -5,15 +5,15 @@ namespace CartolaFCRPG.utils
     public class SimuladorPartida
     {
         private readonly Campo _campo;
-        private readonly Posse _posse;
         private readonly List<Jogador> _jogadores;
         private int _tickAtual = 0;
         private const int MaxTicks = 10; // 90 minutos * 60 segundos = 5400 (1 tick por segundo)
 
-        public SimuladorPartida(Campo campo, Posse posse, List<Jogador> jogadores)
+        private static Random _random = new Random();
+
+        public SimuladorPartida(Campo campo, List<Jogador> jogadores)
         {
             _campo = campo;
-            _posse = posse;
             _jogadores = jogadores;
         }
 
@@ -40,10 +40,10 @@ namespace CartolaFCRPG.utils
             ExecutarAcaoDoJogadorComBola();
 
             // 2. Jogadores adversários podem interceptar ou desarmar
-            ResolverIntercepcoes();
+            // ResolverIntercepcoes();
 
             // 3. A posse pode mudar se a ação falhar ou for interceptada
-            AtualizarPosseDeBola();
+            // AtualizarPosseDeBola();
 
             // 4. Todos os jogadores se movem com base no perfil tático e posse
             ExecutarMovimentacoes();
@@ -54,58 +54,82 @@ namespace CartolaFCRPG.utils
 
         private void ExecutarAcaoDoJogadorComBola()
         {
-            var jogador = _posse.JogadorComBola;
+            var jogador = _campo.posse.JogadorComBola;
             if (jogador == null)
                 return;
 
-            var acao = jogador.DecidirAcao(_campo, _posse);
+            var companheiros = _jogadores
+                .Where(j => j.Time == jogador.Time && j != jogador)
+                .ToList();
+            var oponentes = _jogadores.Where(j => j.Time != jogador.Time).ToList();
 
-            switch (acao.Tipo)
+            var acao = DecisorComBola.EscolherAcaoComBola(
+                jogador,
+                companheiros,
+                oponentes,
+                _random
+            );
+
+            switch (acao)
             {
-                case TipoAcao.Conduzir:
-                    _campo.MoverJogadorComBola(jogador, acao.Direcao);
+                case AcaoComBola.Chutar:
+                    // _campo.TentarChuteAGol(jogador); não implementado
+                    Console.WriteLine($"{jogador.Nome} chutou a gol!");
                     break;
 
-                case TipoAcao.Passe:
-                    _campo.ExecutarPasse(jogador, acao.Alvo);
+                case AcaoComBola.Passar:
+                    var alvoPasse = companheiros.FirstOrDefault(); // Exemplo: escolher o primeiro companheiro
+                    if (alvoPasse != null)
+                        Passes.RealizarPasse(jogador, alvoPasse, _jogadores, _campo.posse, _random); // _jogadores está errado, preciso fazer calcular isso
                     break;
 
-                case TipoAcao.Chute:
-                    _campo.TentarChuteAGol(jogador);
+                case AcaoComBola.Conduzir:
+                    var direcao = DecisorDeMovimentacao.DecidirNovaPosicao(jogador, true, _random); // Exemplo: decidir direção de condução
+                    Movimentacao.MoverJogadorHorizontal(jogador, (int)direcao.Faixa);
+                    Movimentacao.MoverJogadorVertical(jogador, (int)direcao.Zona);
+                    break;
+
+                case AcaoComBola.FicarParado:
+                    // Jogador não faz nada
                     break;
             }
         }
 
-        private void ResolverIntercepcoes()
-        {
-            var adversarios = _jogadores.Where(j => j.Time != _posse.TimeComPosse);
-            foreach (var defensor in adversarios)
-            {
-                if (_campo.PodeInterceptar(defensor, _posse.JogadorComBola))
-                {
-                    bool interceptou = defensor.TentarInterceptar(_posse.JogadorComBola);
-                    if (interceptou)
-                    {
-                        _posse.PerderPossePara(defensor);
-                        break;
-                    }
-                }
-            }
-        }
+        // private void ResolverIntercepcoes()
+        // {
+        //     var adversarios = _jogadores.Where(j => j.Time != _posse.TimeComPosse);
+        //     foreach (var defensor in adversarios)
+        //     {
+        //         if (_campo.PodeInterceptar(defensor, _posse.JogadorComBola))
+        //         {
+        //             bool interceptou = defensor.TentarInterceptar(_posse.JogadorComBola);
+        //             if (interceptou)
+        //             {
+        //                 _posse.PerderPossePara(defensor);
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
 
-        private void AtualizarPosseDeBola()
-        {
-            // Já é tratado na lógica de interceptação ou passe mal-sucedido
-        }
+        // private void AtualizarPosseDeBola()
+        // {
+        //     // Já é tratado na lógica de interceptação ou passe mal-sucedido
+        // }
 
         private void ExecutarMovimentacoes()
         {
             foreach (var jogador in _jogadores)
             {
-                if (jogador != _posse.JogadorComBola)
+                if (jogador != _campo.posse.JogadorComBola)
                 {
-                    var direcao = jogador.DecidirMovimento(_campo, _posse);
-                    _campo.MoverJogador(jogador, direcao);
+                    var direcao = DecisorDeMovimentacao.DecidirNovaPosicao(
+                        jogador,
+                        _campo.posse.TimeComPosse == jogador.Time,
+                        _random
+                    );
+                    Movimentacao.MoverJogadorHorizontal(jogador, (int)direcao.Faixa);
+                    Movimentacao.MoverJogadorVertical(jogador, (int)direcao.Zona);
                 }
             }
         }

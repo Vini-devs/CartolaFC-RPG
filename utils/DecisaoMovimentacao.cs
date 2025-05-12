@@ -12,11 +12,13 @@ namespace CartolaFCRPG.utils
         public int[,] PesosSemBola { get; set; } = new int[ALTURA_CAMPO, LARGURA_CAMPO];
     }
 
-    public class DecisorDeMovimentacao
+    public static class DecisorDeMovimentacao
     {
-        private Random _rand = new();
-
-        public PosicaoCampo? DecidirNovaPosicao(Jogador jogador, bool timeTemPosse)
+        public static PosicaoCampo? DecidirNovaPosicao(
+            Jogador jogador,
+            bool timeTemPosse,
+            Random random
+        )
         {
             var mapa = TaticasMovimentacao.Mapas[jogador.PerfilTatico];
             var pesos = timeTemPosse ? mapa.PesosComBola : mapa.PesosSemBola;
@@ -39,7 +41,7 @@ namespace CartolaFCRPG.utils
                 return null;
 
             int totalPeso = alternativas.Sum(a => a.peso);
-            int roleta = _rand.Next(0, totalPeso);
+            int roleta = random.Next(0, totalPeso);
             int acumulado = 0;
 
             foreach (var alt in alternativas)

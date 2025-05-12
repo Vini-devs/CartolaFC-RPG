@@ -7,8 +7,6 @@ namespace CartolaFCRPG.utils
         public Jogador? JogadorComBola { get; private set; }
         public Time? TimeComPosse => JogadorComBola?.Time;
 
-        public bool NoAr => JogadorComBola == null;
-
         public void AtualizarPosse(Jogador novoDono)
         {
             JogadorComBola = novoDono;

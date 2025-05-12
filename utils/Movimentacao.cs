@@ -2,7 +2,7 @@ using CartolaFCRPG.Models;
 
 namespace CartolaFCRPG.utils
 {
-    public class Movimentacao
+    public static class Movimentacao
     {
         // Métodos para Mover Jogadores
         public static void MoverJogadorVertical(Jogador jogador, int direcao)
@@ -20,7 +20,7 @@ namespace CartolaFCRPG.utils
             }
         }
 
-        public static void MoverJogadorLateral(Jogador jogador, int direcao)
+        public static void MoverJogadorHorizontal(Jogador jogador, int direcao)
         {
             int novaFaixa = (int)jogador.PosicaoAtual.Faixa + direcao;
 

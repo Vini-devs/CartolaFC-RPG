@@ -1,14 +1,20 @@
+using CartolaFCRPG.utils;
+
 namespace CartolaFCRPG.Models
 {
     public class Campo
     {
         public List<Jogador> JogadoresTime1 { get; private set; }
         public List<Jogador> JogadoresTime2 { get; private set; }
+        public Posse posse { get; private set; }
+        public Random random { get; private set; }
 
-        public Campo(List<Jogador> jogadoresTime1, List<Jogador> jogadoresTime2)
+        public Campo(List<Jogador> jogadoresTime1, List<Jogador> jogadoresTime2, Random random)
         {
             JogadoresTime1 = jogadoresTime1;
             JogadoresTime2 = jogadoresTime2;
+            this.random = random;
+            posse = new Posse();
         }
 
         public PosicaoCampo GetPosicaoJogador(Jogador jogador)

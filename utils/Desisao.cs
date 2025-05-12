@@ -3,14 +3,13 @@ using CartolaFCRPG.Models;
 namespace CartolaFCRPG.utils
 {
     // no caso da movimentação, as probabilidades dependem do perfiltatico e de ter a posse de bola
-    public class DecisorComBola
+    public static class DecisorComBola
     {
-        private readonly Random _rand = new();
-
-        public AcaoComBola EscolherAcaoComBola(
+        public static AcaoComBola EscolherAcaoComBola(
             Jogador jogador,
             List<Jogador> companheiros,
-            List<Jogador> oponentes
+            List<Jogador> oponentes,
+            Random random
         )
         {
             var acoes = new List<(AcaoComBola acao, int peso)>();
@@ -38,13 +37,13 @@ namespace CartolaFCRPG.utils
             // Todos têm chance de ficar parado (raro, mas pode simular hesitação)
             acoes.Add((AcaoComBola.FicarParado, 5));
 
-            return Sorteia(acoes);
+            return Sorteia(acoes, random);
         }
 
-        private AcaoComBola Sorteia(List<(AcaoComBola acao, int peso)> acoes)
+        private static AcaoComBola Sorteia(List<(AcaoComBola acao, int peso)> acoes, Random random)
         {
             int total = acoes.Sum(a => a.peso);
-            int roleta = _rand.Next(0, total);
+            int roleta = random.Next(0, total);
             int acumulado = 0;
 
             foreach (var (acao, peso) in acoes)

@@ -4,15 +4,19 @@ namespace CartolaFCRPG.Models
 {
     public class Campo
     {
-        public List<Jogador> JogadoresTime1 { get; private set; }
-        public List<Jogador> JogadoresTime2 { get; private set; }
+        public List<Jogador> JogadoresTimeCasa { get; private set; }
+        public List<Jogador> JogadoresTimeFora { get; private set; }
         public Posse posse { get; private set; }
         public Random random { get; private set; }
 
-        public Campo(List<Jogador> jogadoresTime1, List<Jogador> jogadoresTime2, Random random)
+        public Campo(
+            List<Jogador> jogadoresTimeCasa,
+            List<Jogador> jogadoresTimeFora,
+            Random random
+        )
         {
-            JogadoresTime1 = jogadoresTime1;
-            JogadoresTime2 = jogadoresTime2;
+            JogadoresTimeCasa = jogadoresTimeCasa;
+            JogadoresTimeFora = jogadoresTimeFora;
             this.random = random;
             posse = new Posse();
         }
@@ -29,7 +33,7 @@ namespace CartolaFCRPG.Models
 
         public List<Jogador> ObterTodosJogadores()
         {
-            return JogadoresTime1.Concat(JogadoresTime2).ToList();
+            return JogadoresTimeCasa.Concat(JogadoresTimeFora).ToList();
         }
 
         public Jogador? ObterJogadorNaPosicao(PosicaoCampo posicao)

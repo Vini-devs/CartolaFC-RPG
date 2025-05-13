@@ -63,12 +63,7 @@ namespace CartolaFCRPG.utils
                 .ToList();
             var oponentes = _jogadores.Where(j => j.Time != jogador.Time).ToList();
 
-            var acao = DecisorComBola.EscolherAcaoComBola(
-                jogador,
-                companheiros,
-                oponentes,
-                _random
-            );
+            var acao = DecisorComBola.EscolherAcaoComBola(jogador, _random);
 
             switch (acao)
             {

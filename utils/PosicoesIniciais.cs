@@ -6,12 +6,12 @@ namespace CartolaFCRPG.utils
     {
         public static readonly Dictionary<PerfilTatico, PosicaoCampo> Posições = new()
         {
-            [PerfilTatico.Zagueiro] = new PosicaoCampo((ZonaCampoVertical)0, (FaixaLateral)1), // Grande área, centro
+            [PerfilTatico.Zagueiro] = new PosicaoCampo((ZonaCampoVertical)0, (FaixaLateral)1),
             [PerfilTatico.LateralEsquerdo] = new PosicaoCampo(
                 (ZonaCampoVertical)0,
                 (FaixaLateral)0
             ), // Grande área, esquerda
-            [PerfilTatico.LateralDireito] = new PosicaoCampo((ZonaCampoVertical)0, (FaixaLateral)2), // Grande área, direita
+            [PerfilTatico.LateralDireito] = new PosicaoCampo((ZonaCampoVertical)0, (FaixaLateral)2),
             [PerfilTatico.Volante] = new PosicaoCampo((ZonaCampoVertical)1, (FaixaLateral)1),
             [PerfilTatico.MeiaCentral] = new PosicaoCampo((ZonaCampoVertical)1, (FaixaLateral)1),
             [PerfilTatico.AlaEsquerdo] = new PosicaoCampo((ZonaCampoVertical)1, (FaixaLateral)0),

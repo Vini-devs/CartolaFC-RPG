@@ -5,12 +5,7 @@ namespace CartolaFCRPG.utils
     // no caso da movimentação, as probabilidades dependem do perfiltatico e de ter a posse de bola
     public static class DecisorComBola
     {
-        public static AcaoComBola EscolherAcaoComBola(
-            Jogador jogador,
-            List<Jogador> companheiros,
-            List<Jogador> oponentes,
-            Random random
-        )
+        public static AcaoComBola EscolherAcaoComBola(Jogador jogador, Random random)
         {
             var acoes = new List<(AcaoComBola acao, int peso)>();
 

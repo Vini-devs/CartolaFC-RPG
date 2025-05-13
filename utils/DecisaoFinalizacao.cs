@@ -8,12 +8,16 @@ namespace CartolaFCRPG.utils
     {
         public static bool DecidirFinalizacao(
             Jogador jogador,
-            PosicaoCampo posicaoAtual,
-            Random random
+            PosicaoCampo posicaoAtual
         )
         {
             // Pesos baseados no perfil tático e posição no campo
-            int pesoBase = TaticasFinalizacao.Mapas[jogador.PerfilTatico][(int)posicaoAtual.Zona];
+            if (jogador.Time == campo.TimeCasa)
+            {
+                int pesoBase = TaticasFinalizacao.Mapas[jogador.PerfilTatico][(int)posicaoAtual.Zona];
+            } else {
+                int pesoBase = TaticasFinalizacao.EspelharTabelaFinalizacao(TaticasFinalizacao.Mapas[jogador.PerfilTatico])[(int)posicaoAtual.Zona];
+            }
 
             // Ajuste baseado no atributo de finalização do jogador
             int pesoFinalizacao = pesoBase + jogador.PrecisaoFinalizacao;
@@ -43,5 +47,10 @@ namespace CartolaFCRPG.utils
             [PerfilTatico.PontaEsquerda] = new int[] { 0, 10, 20, 40, 60 },
             [PerfilTatico.PontaDireita] = new int[] { 0, 10, 20, 40, 60 },
         };
+
+        public static int[] EspelharTabelaFinalizacao(int[] tabela)
+        {
+            return tabela.Reverse().ToArray();
+        }
     }
 }

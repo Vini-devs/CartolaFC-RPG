@@ -17,10 +17,15 @@ namespace CartolaFCRPG.utils
         public static PosicaoCampo? DecidirNovaPosicao(
             Jogador jogador,
             bool timeTemPosse,
-            Random random
         )
         {
-            var mapa = TaticasMovimentacao.Mapas[jogador.PerfilTatico];
+            if (jogador.Time == campo.TimeCasa)
+            {
+                var mapa = TaticasMovimentacao.Mapas[jogador.PerfilTatico];
+            } else {
+
+            }
+
             var pesos = timeTemPosse ? mapa.PesosComBola : mapa.PesosSemBola;
 
             var alternativas = new List<(PosicaoCampo pos, int peso)>();
@@ -259,5 +264,7 @@ namespace CartolaFCRPG.utils
                 },
             },
         };
+    
+
     }
 }

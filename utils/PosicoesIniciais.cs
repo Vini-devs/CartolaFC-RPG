@@ -4,7 +4,7 @@ namespace CartolaFCRPG.utils
 {
     public static class PosicoesIniciais
     {
-        public static readonly Dictionary<PerfilTatico, PosicaoCampo> Posições = new()
+        public static readonly Dictionary<PerfilTatico, PosicaoCampo> Posicoes = new()
         {
             [PerfilTatico.Zagueiro] = new PosicaoCampo((ZonaCampoVertical)0, (FaixaLateral)1),
             [PerfilTatico.LateralEsquerdo] = new PosicaoCampo(
@@ -21,6 +21,13 @@ namespace CartolaFCRPG.utils
             [PerfilTatico.Atacante] = new PosicaoCampo((ZonaCampoVertical)2, (FaixaLateral)1),
         };
 
-        public static PosicaoCampo GetPosicaoInicial(PerfilTatico perfil) => Posições[perfil];
+        public static PosicaoCampo GetPosicaoInicial(Jogador jogador) => jogador.Time == campo.TimeCasa ? Posicoes[jogador.PerfilTatico] : EspelharPosicao(Posicoes[jogador.PerfilTatico]);
+
+        public static PosicaoCampo EspelharPosicao(PosicaoCampo pos)
+        {
+            int novaLinha = MapaMovimentacao.ALTURA_CAMPO - 1 - (int)pos.ZonaVertical;
+            int novaColuna = MapaMovimentacao.LARGURA_CAMPO - 1 - (int)pos.FaixaLateral;
+            return new PosicaoCampo((ZonaCampoVertical)novaLinha, (FaixaLateral)novaColuna);
+        }
     }
 }

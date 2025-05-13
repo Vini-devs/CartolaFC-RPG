@@ -4,12 +4,12 @@ namespace CartolaFCRPG.utils
 {
     public class SimuladorPartida
     {
-        private readonly Campo _campo;
+        public Campo campo;
         private readonly List<Jogador> _jogadores;
         private int _tickAtual = 0;
         private const int MaxTicks = 10; // 90 minutos * 60 segundos = 5400 (1 tick por segundo)
 
-        private static Random _random = new Random();
+        public static Random random = new Random();
 
         public SimuladorPartida(Campo campo, List<Jogador> jogadores)
         {

@@ -259,5 +259,22 @@ namespace CartolaFCRPG.utils
                 },
             },
         };
+
+        public static int[,] EspelharTabelaMovimentacao(int[,] tabela)
+        {
+            int linhas = tabela.GetLength(0);
+            int colunas = tabela.GetLength(1);
+            int[,] espelhada = new int[linhas, colunas];
+
+            for (int i = 0; i < linhas; i++)
+            {
+                for (int j = 0; j < colunas; j++)
+                {
+                    espelhada[linhas - 1 - i, colunas - 1 - j] = tabela[i, j];
+                }
+            }
+
+            return espelhada;
+        }
     }
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cartola FC RPG - Início</title>
+    <title>Times - Cartola FC RPG</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,19 +13,18 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">Cartola FC RPG</a>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="times.html">Times</a>
-            </li>
-          </ul>
-        </div>
       </div>
     </nav>
     <div class="container">
-      <h1>Bem-vindo ao Cartola FC RPG</h1>
-      <p>Utilize o menu para gerenciar os times.</p>
-      <a href="times.html" class="btn btn-primary">Gerenciar Times</a>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Times</h2>
+        <a href="criar-time.html" class="btn btn-primary">Novo Time</a>
+      </div>
+      <div id="times-list"></div>
     </div>
+    <script src="script-times.js"></script>
+    <script>
+      loadTimesList();
+    </script>
   </body>
 </html>

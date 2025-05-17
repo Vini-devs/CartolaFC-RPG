@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/torneios")]
 public class TorneioController : ControllerBase
 {
     private readonly CartolaDbContext _context;

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/partidas")]
 public class PartidaController : ControllerBase
 {
     private readonly CartolaDbContext _context;

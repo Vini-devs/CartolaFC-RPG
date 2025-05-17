@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/times")]
 public class TimeController : ControllerBase
 {
     private readonly CartolaDbContext _context;
@@ -31,11 +31,9 @@ public class TimeController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TimeDTO>> GetTime(int id)
+    public async Task<ActionResult<TimeDTO>> GetTime([FromRoute] int id)
     {
-        var time = await _context
-            .Times.Include(t => t.Jogadores)
-            .FirstOrDefaultAsync(t => t.Id == id);
+        var time = await _context.Times.FirstOrDefaultAsync(t => t.Id == id);
 
         if (time == null)
         {
@@ -87,9 +85,7 @@ public class TimeController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateTime(int id, TimeDTO timeDTO)
     {
-        var time = await _context
-            .Times.Include(t => t.Jogadores)
-            .FirstOrDefaultAsync(t => t.Id == id);
+        var time = await _context.Times.FirstOrDefaultAsync(t => t.Id == id);
 
         if (time == null)
         {
@@ -121,16 +117,22 @@ public class TimeController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTime(int id)
     {
-        var time = await _context.Times.FindAsync(id);
+        var time = await _context.Times.FirstOrDefaultAsync(t => t.Id == id);
 
         if (time == null)
         {
             return NotFound();
         }
 
-        _context.Times.Remove(time);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        try
+        {
+            _context.Times.Remove(time);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Erro ao deletar: {ex.Message}");
+        }
     }
 }

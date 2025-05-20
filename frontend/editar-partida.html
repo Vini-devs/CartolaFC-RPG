@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Partida</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+  <div class="container mt-4">
+    <h1>Editar Partida</h1>
+    <form id="form-editar-partida">
+      <div class="mb-3">
+        <label for="timeCasaId" class="form-label">Time da Casa</label>
+        <select class="form-select" id="timeCasaId" name="timeCasaId" required></select>
+      </div>
+      <div class="mb-3">
+        <label for="timeVisitanteId" class="form-label">Time Visitante</label>
+        <select class="form-select" id="timeVisitanteId" name="timeVisitanteId" required></select>
+      </div>
+      <div class="mb-3">
+        <label for="golsCasa" class="form-label">Gols da Casa</label>
+        <input type="number" class="form-control" id="golsCasa" name="golsCasa" required min="0" />
+      </div>
+      <div class="mb-3">
+        <label for="golsVisitante" class="form-label">Gols do Visitante</label>
+        <input type="number" class="form-control" id="golsVisitante" name="golsVisitante" required min="0" />
+      </div>
+      <div class="mb-3">
+        <label for="dataHora" class="form-label">Data e Hora</label>
+        <input type="datetime-local" class="form-control" id="dataHora" name="dataHora" required />
+      </div>
+      <button type="submit" class="btn btn-success">Salvar</button>
+      <a href="partidas.html" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+  <script src="script-partidas.js"></script>
+  <script>
+    loadEditarPartida();
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Jogador</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+  <div class="container mt-4">
+    <h1>Editar Jogador</h1>
+    <form id="form-editar-jogador">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome" required />
+      </div>
+      <div class="mb-3">
+        <label for="posicao" class="form-label">Posição</label>
+        <input type="text" class="form-control" id="posicao" name="posicao" required />
+      </div>
+      <div class="mb-3">
+        <label for="numero" class="form-label">Número</label>
+        <input type="number" class="form-control" id="numero" name="numero" required />
+      </div>
+      <div class="mb-3">
+        <label for="urlFoto" class="form-label">URL da Foto</label>
+        <input type="url" class="form-control" id="urlFoto" name="urlFoto" />
+      </div>
+      <button type="submit" class="btn btn-success">Salvar</button>
+      <a href="jogadores.html" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+  <script src="script-jogadores.js"></script>
+  <script>
+    loadEditarJogador();
+  </script>
+</body>
+</html>

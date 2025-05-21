@@ -9,14 +9,6 @@
     />
   </head>
   <body>
-    <div id="navbar-container"></div>
-    <script>
-      fetch("../../components/navbar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navbar-container").innerHTML = data;
-        });
-    </script>
     <div class="container mt-4">
       <h1>Jogadores</h1>
       <a href="criar-jogador.html" class="btn btn-primary mb-3">Novo Jogador</a>

@@ -14,14 +14,24 @@ function loadPartidasList() {
       }
       el.innerHTML = `<ul class="list-group">${partidas
         .map(
-          (p) => `<li class='list-group-item d-flex justify-content-between align-items-center'>
+          (
+            p
+          ) => `<li class='list-group-item d-flex justify-content-between align-items-center'>
         <span>
-          ${p.timeCasaNome} ${p.golsCasa} x ${p.golsVisitante} ${p.timeVisitanteNome}
-          <small class="text-muted ms-2">${new Date(p.dataHora).toLocaleString()}</small>
+          Casa: ${p.timeIdCasa} ${p.placarCasa} x ${p.placarFora} Fora: ${
+            p.timeIdFora
+          }
+          <small class="text-muted ms-2">${new Date(
+            p.data
+          ).toLocaleString()}</small>
         </span>
         <span>
-          <a href='editar-partida.html?id=${p.id}' class='btn btn-sm btn-warning me-2'>Editar</a>
-          <button class='btn btn-sm btn-danger' onclick='removerPartida(${p.id})'>Remover</button>
+          <a href='editar-partida.html?id=${
+            p.id
+          }' class='btn btn-sm btn-warning me-2'>Editar</a>
+          <button class='btn btn-sm btn-danger' onclick='removerPartida(${
+            p.id
+          })'>Remover</button>
         </span>
       </li>`
         )
@@ -31,7 +41,9 @@ function loadPartidasList() {
 
 function removerPartida(id) {
   if (!confirm("Tem certeza que deseja remover esta partida?")) return;
-  fetch(`${API_PARTIDAS}/${id}`, { method: "DELETE" }).then(() => loadPartidasList());
+  fetch(`${API_PARTIDAS}/${id}`, { method: "DELETE" }).then(() =>
+    loadPartidasList()
+  );
 }
 
 function loadCriarPartida() {
@@ -39,8 +51,8 @@ function loadCriarPartida() {
   fetch(API_TIMES)
     .then((r) => r.json())
     .then((times) => {
-      const casaSelect = document.getElementById("timeCasaId");
-      const visitanteSelect = document.getElementById("timeVisitanteId");
+      const casaSelect = document.getElementById("timeIdCasa");
+      const foraSelect = document.getElementById("timeIdFora");
       times.forEach((t) => {
         const opt1 = document.createElement("option");
         opt1.value = t.id;
@@ -50,26 +62,26 @@ function loadCriarPartida() {
         const opt2 = document.createElement("option");
         opt2.value = t.id;
         opt2.textContent = t.nome;
-        visitanteSelect.appendChild(opt2);
+        foraSelect.appendChild(opt2);
       });
     });
 
   document.getElementById("form-criar-partida").onsubmit = function (e) {
     e.preventDefault();
-    const timeCasaId = parseInt(this.timeCasaId.value, 10);
-    const timeVisitanteId = parseInt(this.timeVisitanteId.value, 10);
-    const golsCasa = parseInt(this.golsCasa.value, 10);
-    const golsVisitante = parseInt(this.golsVisitante.value, 10);
-    const dataHora = this.dataHora.value;
+    const timeIdCasa = parseInt(this.timeIdCasa.value, 10);
+    const timeIdFora = parseInt(this.timeIdFora.value, 10);
+    const placarCasa = parseInt(this.placarCasa.value, 10);
+    const placarFora = parseInt(this.placarFora.value, 10);
+    const data = this.data.value;
     fetch(API_PARTIDAS, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        timeCasaId,
-        timeVisitanteId,
-        golsCasa,
-        golsVisitante,
-        dataHora,
+        timeIdCasa,
+        timeIdFora,
+        placarCasa,
+        placarFora,
+        data,
       }),
     }).then(() => (window.location = "partidas.html"));
   };
@@ -86,42 +98,42 @@ function loadEditarPartida() {
       return fetch(API_TIMES).then((r) => r.json());
     })
     .then((times) => {
-      const casaSelect = document.getElementById("timeCasaId");
-      const visitanteSelect = document.getElementById("timeVisitanteId");
+      const casaSelect = document.getElementById("timeIdCasa");
+      const foraSelect = document.getElementById("timeIdFora");
       times.forEach((t) => {
         const opt1 = document.createElement("option");
         opt1.value = t.id;
         opt1.textContent = t.nome;
-        if (t.id === partida.timeCasaId) opt1.selected = true;
+        if (t.id === partida.timeIdCasa) opt1.selected = true;
         casaSelect.appendChild(opt1);
 
         const opt2 = document.createElement("option");
         opt2.value = t.id;
         opt2.textContent = t.nome;
-        if (t.id === partida.timeVisitanteId) opt2.selected = true;
-        visitanteSelect.appendChild(opt2);
+        if (t.id === partida.timeIdFora) opt2.selected = true;
+        foraSelect.appendChild(opt2);
       });
-      document.getElementById("golsCasa").value = partida.golsCasa;
-      document.getElementById("golsVisitante").value = partida.golsVisitante;
-      document.getElementById("dataHora").value = partida.dataHora?.slice(0, 16) || "";
+      document.getElementById("placarCasa").value = partida.placarCasa;
+      document.getElementById("placarFora").value = partida.placarFora;
+      document.getElementById("data").value = partida.data?.slice(0, 16) || "";
     });
 
   document.getElementById("form-editar-partida").onsubmit = function (e) {
     e.preventDefault();
-    const timeCasaId = parseInt(this.timeCasaId.value, 10);
-    const timeVisitanteId = parseInt(this.timeVisitanteId.value, 10);
-    const golsCasa = parseInt(this.golsCasa.value, 10);
-    const golsVisitante = parseInt(this.golsVisitante.value, 10);
-    const dataHora = this.dataHora.value;
+    const timeIdCasa = parseInt(this.timeIdCasa.value, 10);
+    const timeIdFora = parseInt(this.timeIdFora.value, 10);
+    const placarCasa = parseInt(this.placarCasa.value, 10);
+    const placarFora = parseInt(this.placarFora.value, 10);
+    const data = this.data.value;
     fetch(`${API_PARTIDAS}/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        timeCasaId,
-        timeVisitanteId,
-        golsCasa,
-        golsVisitante,
-        dataHora,
+        timeIdCasa,
+        timeIdFora,
+        placarCasa,
+        placarFora,
+        data,
       }),
     }).then(() => (window.location = "partidas.html"));
   };

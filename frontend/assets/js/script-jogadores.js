@@ -13,14 +13,19 @@ function loadJogadoresList() {
       }
       el.innerHTML = `<ul class="list-group">${jogadores
         .map(
-          (j) => `<li class='list-group-item d-flex justify-content-between align-items-center'>
+          (
+            j
+          ) => `<li class='list-group-item d-flex justify-content-between align-items-center'>
         <span>
-          <img src="${j.urlFoto || ''}" alt="" style="width:32px;height:32px;object-fit:cover;border-radius:50%;margin-right:8px;">
-          ${j.nome} (${j.posicao}, #${j.numero})
+          ${j.nome} (${j.posicao || ""}, TimeId: ${j.timeId})
         </span>
         <span>
-          <a href='editar-jogador.html?id=${j.id}' class='btn btn-sm btn-warning me-2'>Editar</a>
-          <button class='btn btn-sm btn-danger' onclick='removerJogador(${j.id})'>Remover</button>
+          <a href='editar-jogador.html?id=${
+            j.id
+          }' class='btn btn-sm btn-warning me-2'>Editar</a>
+          <button class='btn btn-sm btn-danger' onclick='removerJogador(${
+            j.id
+          })'>Remover</button>
         </span>
       </li>`
         )
@@ -30,7 +35,9 @@ function loadJogadoresList() {
 
 function removerJogador(id) {
   if (!confirm("Tem certeza que deseja remover este jogador?")) return;
-  fetch(`${API_JOGADORES}/${id}`, { method: "DELETE" }).then(() => loadJogadoresList());
+  fetch(`${API_JOGADORES}/${id}`, { method: "DELETE" }).then(() =>
+    loadJogadoresList()
+  );
 }
 
 function loadCriarJogador() {
@@ -38,16 +45,14 @@ function loadCriarJogador() {
     e.preventDefault();
     const nome = this.nome.value;
     const posicao = this.posicao.value;
-    const numero = parseInt(this.numero.value, 10);
-    const urlFoto = this.urlFoto.value;
+    const timeId = parseInt(this.timeId.value, 10);
     fetch(API_JOGADORES, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         nome,
         posicao,
-        numero,
-        urlFoto,
+        timeId,
       }),
     }).then(() => (window.location = "jogadores.html"));
   };
@@ -61,22 +66,19 @@ function loadEditarJogador() {
     .then((jogador) => {
       document.getElementById("nome").value = jogador.nome;
       document.getElementById("posicao").value = jogador.posicao || "";
-      document.getElementById("numero").value = jogador.numero || "";
-      document.getElementById("urlFoto").value = jogador.urlFoto || "";
+      document.getElementById("timeId").value = jogador.timeId || "";
       document.getElementById("form-editar-jogador").onsubmit = function (e) {
         e.preventDefault();
         const nome = this.nome.value;
         const posicao = this.posicao.value;
-        const numero = parseInt(this.numero.value, 10);
-        const urlFoto = this.urlFoto.value;
+        const timeId = parseInt(this.timeId.value, 10);
         fetch(`${API_JOGADORES}/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             nome,
             posicao,
-            numero,
-            urlFoto,
+            timeId,
           }),
         }).then(() => (window.location = "jogadores.html"));
       };

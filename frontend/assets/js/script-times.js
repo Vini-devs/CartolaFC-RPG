@@ -37,20 +37,13 @@ function loadCriarTime() {
     e.preventDefault();
     const nome = this.nome.value;
     const sigla = this.sigla.value;
-    const urlEscudo = this.urlEscudo.value;
     fetch(API_BASE, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         nome,
         sigla,
-        urlEscudo,
-        jogadoresIds: [],
-        golsFeitos: 0,
-        golsSofridos: 0,
-        vitorias: 0,
-        derrotas: 0,
-        empates: 0,
+        jogadorIds: [],
       }),
     }).then(() => (window.location = "times.html"));
   };
@@ -62,27 +55,19 @@ function loadEditarTime() {
   fetch(`${API_BASE}/${id}`)
     .then((r) => r.json())
     .then((time) => {
-      document.getElementById("nome").value = time.nome;
+      document.getElementById("nome").value = time.nome || "";
       document.getElementById("sigla").value = time.sigla || "";
-      document.getElementById("urlEscudo").value = time.urlEscudo || "";
       document.getElementById("form-editar-time").onsubmit = function (e) {
         e.preventDefault();
         const nome = this.nome.value;
         const sigla = this.sigla.value;
-        const urlEscudo = this.urlEscudo.value;
         fetch(`${API_BASE}/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             nome,
             sigla,
-            urlEscudo,
-            jogadoresIds: time.jogadoresIds || [],
-            golsFeitos: time.golsFeitos,
-            golsSofridos: time.golsSofridos,
-            vitorias: time.vitorias,
-            derrotas: time.derrotas,
-            empates: time.empates,
+            jogadorIds: time.jogadorIds || [],
           }),
         }).then(() => (window.location = "times.html"));
       };

@@ -8,6 +8,4 @@ public class PartidaDTO
     public int PlacarCasa { get; set; }
     public int PlacarFora { get; set; }
     public DateTime Data { get; set; }
-    public bool Finalizada { get; set; }
-    public int TorneioId { get; set; }
 }

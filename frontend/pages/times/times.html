@@ -10,11 +10,17 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Cartola FC RPG</a>
-      </div>
-    </nav>
+    <!-- Importando o arquivo de navbar -->
+    <!-- Navbar import -->
+    <div id="navbar-container"></div>
+    <script>
+      fetch("../../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-container").innerHTML = data;
+        });
+    </script>
+
     <div class="container">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Times</h2>

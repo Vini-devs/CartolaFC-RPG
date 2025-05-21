@@ -15,70 +15,63 @@ public class TimeController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TimeDTO>>> GetTimes()
     {
-        return await _context
-            .Times.Select(t => new TimeDTO
-            {
-                Id = t.Id,
-                Nome = t.Nome,
-                JogadoresIds = t.Jogadores.Select(j => j.Id).ToList(),
-                GolsFeitos = t.GolsFeitos,
-                GolsSofridos = t.GolsSofridos,
-                Vitorias = t.Vitorias,
-                Derrotas = t.Derrotas,
-                Empates = t.Empates,
-            })
-            .ToListAsync();
+        var times = await _context.Times.ToListAsync();
+        var timeDTOs = new List<TimeDTO>();
+        foreach (var t in times)
+        {
+            var jogadorIds = await _context
+                .Jogadores.Where(j => j.TimeId == t.Id)
+                .Select(j => j.Id)
+                .ToListAsync();
+            timeDTOs.Add(
+                new TimeDTO
+                {
+                    Id = t.Id,
+                    Nome = t.Nome,
+                    Sigla = t.Sigla,
+                    JogadorIds = jogadorIds,
+                }
+            );
+        }
+        return timeDTOs;
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<TimeDTO>> GetTime([FromRoute] int id)
     {
         var time = await _context.Times.FirstOrDefaultAsync(t => t.Id == id);
-
         if (time == null)
         {
             return NotFound();
         }
-
+        var jogadorIds = await _context
+            .Jogadores.Where(j => j.TimeId == time.Id)
+            .Select(j => j.Id)
+            .ToListAsync();
         return new TimeDTO
         {
             Id = time.Id,
             Nome = time.Nome,
-            JogadoresIds = time.Jogadores.Select(j => j.Id).ToList(),
-            GolsFeitos = time.GolsFeitos,
-            GolsSofridos = time.GolsSofridos,
-            Vitorias = time.Vitorias,
-            Derrotas = time.Derrotas,
-            Empates = time.Empates,
+            Sigla = time.Sigla,
+            JogadorIds = jogadorIds,
         };
     }
 
     [HttpPost]
     public async Task<ActionResult<Time>> CreateTime(TimeDTO timeDTO)
     {
-        var jogadores = await _context
-            .Jogadores.Where(j => timeDTO.JogadoresIds.Contains(j.Id))
-            .ToListAsync();
-
-        if (jogadores.Count != timeDTO.JogadoresIds.Count)
-        {
-            return BadRequest("Invalid Jogador IDs.");
-        }
-
-        var time = new Time
-        {
-            Nome = timeDTO.Nome,
-            Jogadores = jogadores,
-            GolsFeitos = timeDTO.GolsFeitos,
-            GolsSofridos = timeDTO.GolsSofridos,
-            Vitorias = timeDTO.Vitorias,
-            Derrotas = timeDTO.Derrotas,
-            Empates = timeDTO.Empates,
-        };
-
+        var time = new Time { Nome = timeDTO.Nome, Sigla = timeDTO.Sigla };
         _context.Times.Add(time);
         await _context.SaveChangesAsync();
-
+        // Atualiza os jogadores para o novo time
+        var jogadores = await _context
+            .Jogadores.Where(j => timeDTO.JogadorIds.Contains(j.Id))
+            .ToListAsync();
+        foreach (var jogador in jogadores)
+        {
+            jogador.TimeId = time.Id;
+        }
+        await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetTime), new { id = time.Id }, time);
     }
 
@@ -86,31 +79,29 @@ public class TimeController : ControllerBase
     public async Task<IActionResult> UpdateTime(int id, TimeDTO timeDTO)
     {
         var time = await _context.Times.FirstOrDefaultAsync(t => t.Id == id);
-
         if (time == null)
         {
             return NotFound();
         }
-
-        var jogadores = await _context
-            .Jogadores.Where(j => timeDTO.JogadoresIds.Contains(j.Id))
-            .ToListAsync();
-
-        if (jogadores.Count != timeDTO.JogadoresIds.Count)
-        {
-            return BadRequest("Invalid Jogador IDs.");
-        }
-
         time.Nome = timeDTO.Nome;
-        time.Jogadores = jogadores;
-        time.GolsFeitos = timeDTO.GolsFeitos;
-        time.GolsSofridos = timeDTO.GolsSofridos;
-        time.Vitorias = timeDTO.Vitorias;
-        time.Derrotas = timeDTO.Derrotas;
-        time.Empates = timeDTO.Empates;
-
+        time.Sigla = timeDTO.Sigla;
+        // Atualiza os jogadores para o time
+        var jogadores = await _context
+            .Jogadores.Where(j => timeDTO.JogadorIds.Contains(j.Id))
+            .ToListAsync();
+        foreach (var jogador in jogadores)
+        {
+            jogador.TimeId = time.Id;
+        }
+        // Remove jogadores antigos que não estão mais na lista
+        var jogadoresAntigos = await _context
+            .Jogadores.Where(j => j.TimeId == time.Id && !timeDTO.JogadorIds.Contains(j.Id))
+            .ToListAsync();
+        foreach (var jogador in jogadoresAntigos)
+        {
+            jogador.TimeId = 0; // ou null, se permitido
+        }
         await _context.SaveChangesAsync();
-
         return NoContent();
     }
 

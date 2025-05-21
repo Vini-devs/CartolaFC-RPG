@@ -3,15 +3,7 @@ using System.Collections.Generic;
 public class Time
 {
     public int Id { get; set; }
-    public string Nome { get; set; }
-    public string Sigla { get; set; }
-    public string UrlEscudo { get; set; }
-    public List<Jogador> Jogadores { get; set; } = new List<Jogador>();
-
-    // Estatísticas agregadas opcionais
-    public int GolsFeitos { get; set; }
-    public int GolsSofridos { get; set; }
-    public int Vitorias { get; set; }
-    public int Derrotas { get; set; }
-    public int Empates { get; set; }
+    public string? Nome { get; set; }
+    public string? Sigla { get; set; }
+    public List<int> JogadorIds { get; set; } = new List<int>();
 }

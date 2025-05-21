@@ -54,11 +54,6 @@ app.MapPut(
         if (time is null)
             return Results.NotFound();
         time.Nome = input.Nome;
-        time.GolsFeitos = input.GolsFeitos;
-        time.GolsSofridos = input.GolsSofridos;
-        time.Vitorias = input.Vitorias;
-        time.Derrotas = input.Derrotas;
-        time.Empates = input.Empates;
         await db.SaveChangesAsync();
         return Results.Ok(time);
     }
@@ -109,13 +104,6 @@ app.MapPut(
         if (jogador is null)
             return Results.NotFound();
         jogador.Nome = input.Nome;
-        jogador.Tecnica = input.Tecnica;
-        jogador.Defesa = input.Defesa;
-        jogador.PrecisaoFinalizacao = input.PrecisaoFinalizacao;
-        jogador.PrecisaoPasse = input.PrecisaoPasse;
-        jogador.AptidaoFisica = input.AptidaoFisica;
-        jogador.Agilidade = input.Agilidade;
-        jogador.Mentalidade = input.Mentalidade;
         jogador.Posicao = input.Posicao;
         jogador.TimeId = input.TimeId;
         await db.SaveChangesAsync();
@@ -170,8 +158,6 @@ app.MapPut(
         partida.PlacarCasa = input.PlacarCasa;
         partida.PlacarFora = input.PlacarFora;
         partida.Data = input.Data;
-        partida.Finalizada = input.Finalizada;
-        partida.TorneioId = input.TorneioId;
         await db.SaveChangesAsync();
         return Results.Ok(partida);
     }
@@ -222,8 +208,6 @@ app.MapPut(
         if (torneio is null)
             return Results.NotFound();
         torneio.Nome = input.Nome;
-        torneio.Tipo = input.Tipo;
-        torneio.Status = input.Status;
         await db.SaveChangesAsync();
         return Results.Ok(torneio);
     }

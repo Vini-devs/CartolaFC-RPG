@@ -19,13 +19,11 @@ public class PartidaController : ControllerBase
             .Partidas.Select(p => new PartidaDTO
             {
                 Id = p.Id,
-                TimeCasaId = p.TimeCasa.Id,
-                TimeForaId = p.TimeFora.Id,
+                TimeCasaId = p.TimeIdCasa,
+                TimeForaId = p.TimeIdFora,
                 PlacarCasa = p.PlacarCasa,
                 PlacarFora = p.PlacarFora,
                 Data = p.Data,
-                Finalizada = p.Finalizada,
-                TorneioId = p.TorneioId,
             })
             .ToListAsync();
     }
@@ -33,55 +31,35 @@ public class PartidaController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<PartidaDTO>> GetPartida(int id)
     {
-        var partida = await _context
-            .Partidas.Include(p => p.TimeCasa)
-            .Include(p => p.TimeFora)
-            .FirstOrDefaultAsync(p => p.Id == id);
-
+        var partida = await _context.Partidas.FirstOrDefaultAsync(p => p.Id == id);
         if (partida == null)
         {
             return NotFound();
         }
-
         return new PartidaDTO
         {
             Id = partida.Id,
-            TimeCasaId = partida.TimeCasa.Id,
-            TimeForaId = partida.TimeFora.Id,
+            TimeCasaId = partida.TimeIdCasa,
+            TimeForaId = partida.TimeIdFora,
             PlacarCasa = partida.PlacarCasa,
             PlacarFora = partida.PlacarFora,
             Data = partida.Data,
-            Finalizada = partida.Finalizada,
-            TorneioId = partida.TorneioId,
         };
     }
 
     [HttpPost]
     public async Task<ActionResult<Partida>> CreatePartida(PartidaDTO partidaDTO)
     {
-        var timeCasa = await _context.Times.FindAsync(partidaDTO.TimeCasaId);
-        var timeFora = await _context.Times.FindAsync(partidaDTO.TimeForaId);
-        var torneio = await _context.Torneios.FindAsync(partidaDTO.TorneioId);
-
-        if (timeCasa == null || timeFora == null || torneio == null)
-        {
-            return BadRequest("Invalid Time or Torneio ID");
-        }
-
         var partida = new Partida
         {
-            TimeCasa = timeCasa,
-            TimeFora = timeFora,
+            TimeIdCasa = partidaDTO.TimeCasaId,
+            TimeIdFora = partidaDTO.TimeForaId,
             PlacarCasa = partidaDTO.PlacarCasa,
             PlacarFora = partidaDTO.PlacarFora,
             Data = partidaDTO.Data,
-            Finalizada = partidaDTO.Finalizada,
-            Torneio = torneio,
         };
-
         _context.Partidas.Add(partida);
         await _context.SaveChangesAsync();
-
         return CreatedAtAction(nameof(GetPartida), new { id = partida.Id }, partida);
     }
 
@@ -89,31 +67,16 @@ public class PartidaController : ControllerBase
     public async Task<IActionResult> UpdatePartida(int id, PartidaDTO partidaDTO)
     {
         var partida = await _context.Partidas.FindAsync(id);
-
         if (partida == null)
         {
             return NotFound();
         }
-
-        var timeCasa = await _context.Times.FindAsync(partidaDTO.TimeCasaId);
-        var timeFora = await _context.Times.FindAsync(partidaDTO.TimeForaId);
-        var torneio = await _context.Torneios.FindAsync(partidaDTO.TorneioId);
-
-        if (timeCasa == null || timeFora == null || torneio == null)
-        {
-            return BadRequest("Invalid Time or Torneio ID");
-        }
-
-        partida.TimeCasa = timeCasa;
-        partida.TimeFora = timeFora;
+        partida.TimeIdCasa = partidaDTO.TimeCasaId;
+        partida.TimeIdFora = partidaDTO.TimeForaId;
         partida.PlacarCasa = partidaDTO.PlacarCasa;
         partida.PlacarFora = partidaDTO.PlacarFora;
         partida.Data = partidaDTO.Data;
-        partida.Finalizada = partidaDTO.Finalizada;
-        partida.Torneio = torneio;
-
         await _context.SaveChangesAsync();
-
         return NoContent();
     }
 

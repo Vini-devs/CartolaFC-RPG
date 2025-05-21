@@ -20,14 +20,7 @@ public class JogadorController : ControllerBase
             {
                 Id = j.Id,
                 Nome = j.Nome,
-                Tecnica = j.Tecnica,
-                Defesa = j.Defesa,
-                PrecisaoFinalizacao = j.PrecisaoFinalizacao,
-                PrecisaoPasse = j.PrecisaoPasse,
-                AptidaoFisica = j.AptidaoFisica,
-                Agilidade = j.Agilidade,
-                Mentalidade = j.Mentalidade,
-                Posicao = j.Posicao.Nome,
+                Posicao = j.Posicao,
                 TimeId = j.TimeId,
             })
             .ToListAsync();
@@ -49,14 +42,7 @@ public class JogadorController : ControllerBase
         {
             Id = jogador.Id,
             Nome = jogador.Nome,
-            Tecnica = jogador.Tecnica,
-            Defesa = jogador.Defesa,
-            PrecisaoFinalizacao = jogador.PrecisaoFinalizacao,
-            PrecisaoPasse = jogador.PrecisaoPasse,
-            AptidaoFisica = jogador.AptidaoFisica,
-            Agilidade = jogador.Agilidade,
-            Mentalidade = jogador.Mentalidade,
-            Posicao = jogador.Posicao.Nome,
+            Posicao = jogador.Posicao,
             TimeId = jogador.TimeId,
         };
     }
@@ -74,14 +60,7 @@ public class JogadorController : ControllerBase
         var jogador = new Jogador
         {
             Nome = jogadorDTO.Nome,
-            Tecnica = jogadorDTO.Tecnica,
-            Defesa = jogadorDTO.Defesa,
-            PrecisaoFinalizacao = jogadorDTO.PrecisaoFinalizacao,
-            PrecisaoPasse = jogadorDTO.PrecisaoPasse,
-            AptidaoFisica = jogadorDTO.AptidaoFisica,
-            Agilidade = jogadorDTO.Agilidade,
-            Mentalidade = jogadorDTO.Mentalidade,
-            Posicao = new PosicaoCampo { Nome = jogadorDTO.Posicao },
+            Posicao = jogadorDTO.Posicao,
             TimeId = jogadorDTO.TimeId,
         };
 
@@ -111,14 +90,7 @@ public class JogadorController : ControllerBase
         }
 
         jogador.Nome = jogadorDTO.Nome;
-        jogador.Tecnica = jogadorDTO.Tecnica;
-        jogador.Defesa = jogadorDTO.Defesa;
-        jogador.PrecisaoFinalizacao = jogadorDTO.PrecisaoFinalizacao;
-        jogador.PrecisaoPasse = jogadorDTO.PrecisaoPasse;
-        jogador.AptidaoFisica = jogadorDTO.AptidaoFisica;
-        jogador.Agilidade = jogadorDTO.Agilidade;
-        jogador.Mentalidade = jogadorDTO.Mentalidade;
-        jogador.Posicao.Nome = jogadorDTO.Posicao;
+        jogador.Posicao = jogadorDTO.Posicao;
         jogador.TimeId = jogadorDTO.TimeId;
 
         await _context.SaveChangesAsync();

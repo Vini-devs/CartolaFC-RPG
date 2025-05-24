@@ -19,6 +19,9 @@ builder.Services.AddDbContext<CartolaDbContext>(options =>
 
 var app = builder.Build();
 
+// Habilita o metodo CORS 
+app.UseCors("AllowAll");
+
 app.UseCors();
 app.UseHttpsRedirection();
 

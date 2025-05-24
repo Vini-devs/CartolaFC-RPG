@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CartolaFCRPG.Migrations
 {
     [DbContext(typeof(CartolaDbContext))]
-    [Migration("20250521132150_Simplificacao")]
+    [Migration("20250524123131_Simplificacao")]
     partial class Simplificacao
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.16");
 
             modelBuilder.Entity("Jogador", b =>
                 {

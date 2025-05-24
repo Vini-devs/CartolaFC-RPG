@@ -161,7 +161,7 @@ namespace CartolaFCRPG.Migrations
                 table: "Torneios",
                 type: "TEXT",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "[]");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Sigla",

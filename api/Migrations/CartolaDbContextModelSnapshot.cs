@@ -14,7 +14,7 @@ namespace CartolaFCRPG.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.16");
 
             modelBuilder.Entity("Jogador", b =>
                 {

@@ -9,7 +9,7 @@
     />
   </head>
   <body>
-    <div id="navbar-container"></div>
+    <nav id="navbar-container"></nav>
     <script>
       fetch("../../components/navbar.html")
         .then((response) => response.text())
@@ -17,9 +17,11 @@
           document.getElementById("navbar-container").innerHTML = data;
         });
     </script>
-    <div class="container mt-4">
-      <h1>Partidas</h1>
-      <a href="criar-partida.html" class="btn btn-primary mb-3">Nova Partida</a>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Partidas</h2>
+        <a href="criar-partida.html" class="btn btn-primary">Novo Partida</a>
+      </div>
       <div id="partidas-list"></div>
     </div>
     <script src="../../assets/js/script-partidas.js"></script>

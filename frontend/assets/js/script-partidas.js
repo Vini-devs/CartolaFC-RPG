@@ -2,25 +2,26 @@ const API_PARTIDAS = "http://localhost:5023/partidas";
 const API_TIMES = "http://localhost:5023/times";
 
 function loadPartidasList() {
-  fetch(API_PARTIDAS)
-    .then((r) => r.json())
-    .then((partidas) => {
-      const el = document.getElementById("partidas-list");
-      if (!el) return;
-      if (!partidas.length) {
-        el.innerHTML =
-          '<div class="alert alert-info">Nenhuma partida cadastrada.</div>';
-        return;
-      }
-      el.innerHTML = `<ul class="list-group">${partidas
-        .map(
-          (
-            p
-          ) => `<li class='list-group-item d-flex justify-content-between align-items-center'>
+  Promise.all([
+    fetch(API_PARTIDAS).then((r) => r.json()),
+    fetch(API_TIMES).then((r) => r.json()),
+  ]).then(([partidas, times]) => {
+    const el = document.getElementById("partidas-list");
+    if (!el) return;
+    if (!partidas.length) {
+      el.innerHTML =
+        '<div class="alert alert-info">Nenhuma partida cadastrada.</div>';
+      return;
+    }
+    el.innerHTML = `<ul class="list-group">${partidas
+      .map((p) => {
+        const timeCasa = times.find((t) => t.id === p.timeIdCasa);
+        const timeFora = times.find((t) => t.id === p.timeIdFora);
+        return `<li class='list-group-item d-flex justify-content-between align-items-center'>
         <span>
-          Casa: ${p.timeIdCasa} ${p.placarCasa} x ${p.placarFora} Fora: ${
-            p.timeIdFora
-          }
+          ${timeCasa ? timeCasa.nome : p.timeIdCasa} ${p.placarCasa} x ${
+          p.placarFora
+        } ${timeFora ? timeFora.nome : p.timeIdFora}
           <small class="text-muted ms-2">${new Date(
             p.data
           ).toLocaleString()}</small>
@@ -33,10 +34,10 @@ function loadPartidasList() {
             p.id
           })'>Remover</button>
         </span>
-      </li>`
-        )
-        .join("")}</ul>`;
-    });
+      </li>`;
+      })
+      .join("")}</ul>`;
+  });
 }
 
 function removerPartida(id) {

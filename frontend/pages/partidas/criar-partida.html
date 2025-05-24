@@ -9,6 +9,14 @@
     />
   </head>
   <body>
+    <nav id="navbar-container"></nav>
+    <script>
+      fetch("../../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-container").innerHTML = data;
+        });
+    </script>
     <div class="container mt-4">
       <h1>Nova Partida</h1>
       <form id="form-criar-partida">
@@ -68,7 +76,7 @@
         <a href="partidas.html" class="btn btn-secondary">Cancelar</a>
       </form>
     </div>
-    <script src="script-partidas.js"></script>
+    <script src="../../assets/js/script-partidas.js"></script>
     <script>
       loadCriarPartida();
     </script>

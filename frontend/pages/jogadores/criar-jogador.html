@@ -9,6 +9,14 @@
     />
   </head>
   <body>
+    <nav id="navbar-container"></nav>
+    <script>
+      fetch("../../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-container").innerHTML = data;
+        });
+    </script>
     <div class="container mt-4">
       <h1>Novo Jogador</h1>
       <form id="form-criar-jogador">
@@ -42,10 +50,10 @@
         <a href="jogadores.html" class="btn btn-secondary">Cancelar</a>
       </form>
     </div>
-    <script src="script-jogadores.js"></script>
+    <script src="../../assets/js/script-jogadores.js"></script>
     <script>
       function preencherTimesSelect() {
-        fetch("../../api/times")
+        fetch("http://localhost:5023/times")
           .then((r) => r.json())
           .then((times) => {
             const select = document.getElementById("timeId");

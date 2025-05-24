@@ -1,23 +1,24 @@
 const API_JOGADORES = "http://localhost:5023/jogadores";
+const API_TIMES = "http://localhost:5023/times";
 
 function loadJogadoresList() {
-  fetch(API_JOGADORES)
-    .then((r) => r.json())
-    .then((jogadores) => {
-      const el = document.getElementById("jogadores-list");
-      if (!el) return;
-      if (!jogadores.length) {
-        el.innerHTML =
-          '<div class="alert alert-info">Nenhum jogador cadastrado.</div>';
-        return;
-      }
-      el.innerHTML = `<ul class="list-group">${jogadores
-        .map(
-          (
-            j
-          ) => `<li class='list-group-item d-flex justify-content-between align-items-center'>
+  Promise.all([
+    fetch(API_JOGADORES).then((r) => r.json()),
+    fetch(API_TIMES).then((r) => r.json()),
+  ]).then(([jogadores, times]) => {
+    const el = document.getElementById("jogadores-list");
+    if (!el) return;
+    if (!jogadores.length) {
+      el.innerHTML =
+        '<div class="alert alert-info">Nenhum jogador cadastrado.</div>';
+      return;
+    }
+    el.innerHTML = `<ul class="list-group">${jogadores
+      .map((j) => {
+        const time = times.find((t) => t.id === j.timeId);
+        return `<li class='list-group-item d-flex justify-content-between align-items-center'>
         <span>
-          ${j.nome} (${j.posicao || ""}, TimeId: ${j.timeId})
+          ${j.nome} | ${j.posicao || ""} do ${time ? time.nome : "-"}
         </span>
         <span>
           <a href='editar-jogador.html?id=${
@@ -27,10 +28,10 @@ function loadJogadoresList() {
             j.id
           })'>Remover</button>
         </span>
-      </li>`
-        )
-        .join("")}</ul>`;
-    });
+      </li>`;
+      })
+      .join("")}</ul>`;
+  });
 }
 
 function removerJogador(id) {

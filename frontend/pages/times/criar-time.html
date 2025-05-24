@@ -10,11 +10,14 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Cartola FC RPG</a>
-      </div>
-    </nav>
+    <nav id="navbar-container"></nav>
+    <script>
+      fetch("../../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-container").innerHTML = data;
+        });
+    </script>
     <div class="container">
       <h2>Criar Novo Time</h2>
       <form id="form-criar-time">
@@ -42,7 +45,7 @@
         <a href="times.html" class="btn btn-secondary ms-2">Cancelar</a>
       </form>
     </div>
-    <script src="script-times.js"></script>
+    <script src="../../assets/js/script-times.js"></script>
     <script>
       loadCriarTime();
     </script>

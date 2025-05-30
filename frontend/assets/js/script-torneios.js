@@ -47,7 +47,10 @@ function loadCriarTorneio() {
         nome,
         partidaIds: [],
       }),
-    }).then(() => (window.location = "torneios.html"));
+    }).then(() => {
+      alert(`Torneio '${nome}' salvo com sucesso!`);
+      window.location = "torneios.html";
+    });
   };
 }
 

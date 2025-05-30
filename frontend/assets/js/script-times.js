@@ -45,7 +45,10 @@ function loadCriarTime() {
         sigla,
         jogadorIds: [],
       }),
-    }).then(() => (window.location = "times.html"));
+    }).then(() => {
+      alert(`Time '${nome}' salvo com sucesso!`);
+      window.location = "times.html";
+    });
   };
 }
 

@@ -74,17 +74,28 @@ function loadCriarPartida() {
     const placarCasa = parseInt(this.placarCasa.value, 10);
     const placarFora = parseInt(this.placarFora.value, 10);
     const data = this.data.value;
-    fetch(API_PARTIDAS, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        timeIdCasa,
-        timeIdFora,
-        placarCasa,
-        placarFora,
-        data,
-      }),
-    }).then(() => (window.location = "partidas.html"));
+    // Buscar nomes dos times para o alerta
+    Promise.all([
+      fetch(`${API_TIMES}/${timeIdCasa}`).then((r) => r.json()),
+      fetch(`${API_TIMES}/${timeIdFora}`).then((r) => r.json()),
+    ])
+      .then(([casa, fora]) => {
+        fetch(API_PARTIDAS, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            timeIdCasa,
+            timeIdFora,
+            placarCasa,
+            placarFora,
+            data,
+          }),
+        }).then(() => {
+          alert(`Partida '${casa.nome} x ${fora.nome}' salva com sucesso!`);
+          window.location = "partidas.html";
+        });
+      })
+      .catch((error) => console.error("Erro ao salvar partida:", error));
   };
 }
 

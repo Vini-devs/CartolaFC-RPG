@@ -55,7 +55,10 @@ function loadCriarJogador() {
         posicao,
         timeId,
       }),
-    }).then(() => (window.location = "jogadores.html"));
+    }).then(() => {
+      alert(`Jogador '${nome}' salvo com sucesso!`);
+      window.location = "jogadores.html";
+    });
   };
 }
 

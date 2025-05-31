@@ -1,0 +1,43 @@
+body {
+  background: linear-gradient(135deg, #3a7d1c 0%, #6bbf59 100%);
+  min-height: 100vh;
+  color: #fff;
+}
+
+.container {
+  background: rgba(0,0,0,0.7);
+  border-radius: 16px;
+  padding: 40px 32px;
+  margin-top: 60px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  text-align: center;
+}
+
+h1 {
+  font-weight: bold;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #ff512f 0%, #dd2476 100%);
+  border: none;
+  font-weight: bold;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #dd2476 0%, #ff512f 100%);
+}
+
+.navbar {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}

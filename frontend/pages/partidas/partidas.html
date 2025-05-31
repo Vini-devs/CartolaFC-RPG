@@ -2,41 +2,33 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gerenciar Partidas - Cartola FC RPG</title>
+    <title>Consultar Partidas - Cartola FC RPG</title>
+
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
     <link href="../../assets/style.css" rel="stylesheet" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="../../index.html">Cartola FC RPG</a>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="../times/times.html">Times</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../jogadores/jogadores.html">Jogadores</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="../partidas/partidas.html">Partidas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../torneios/torneios.html">Torneios</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <nav id="navbar-container"></nav>
+    <script>
+      fetch("../../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-container").innerHTML = data;
+        });
+    </script>
     <div class="container">
-      <h1>Gerenciar Partidas</h1>
-      <div id="partidas-list"><!-- Conteúdo dinâmico das partidas --></div>
-      <a href="criar-partida.html" class="btn btn-primary mt-3">Adicionar Nova Partida</a>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Partidas</h2>
+        <a href="criar-partida.html" class="btn btn-primary">Novo Partida</a>
+      </div>
+      <div id="partidas-list"></div>
     </div>
     <script src="../../assets/js/script-partidas.js"></script>
+    <script>
+      loadPartidasList();
+    </script>
   </body>
 </html>

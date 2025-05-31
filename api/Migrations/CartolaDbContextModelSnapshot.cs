@@ -34,7 +34,7 @@ namespace CartolaFCRPG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Jogadores");
+                    b.ToTable("Jogadores", (string)null);
                 });
 
             modelBuilder.Entity("Partida", b =>
@@ -60,7 +60,7 @@ namespace CartolaFCRPG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Partidas");
+                    b.ToTable("Partidas", (string)null);
                 });
 
             modelBuilder.Entity("Time", b =>
@@ -81,7 +81,7 @@ namespace CartolaFCRPG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Times");
+                    b.ToTable("Times", (string)null);
                 });
 
             modelBuilder.Entity("Torneio", b =>
@@ -99,7 +99,7 @@ namespace CartolaFCRPG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Torneios");
+                    b.ToTable("Torneios", (string)null);
                 });
 #pragma warning restore 612, 618
         }

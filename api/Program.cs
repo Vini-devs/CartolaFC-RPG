@@ -19,7 +19,7 @@ builder.Services.AddDbContext<CartolaDbContext>(options =>
 
 var app = builder.Build();
 
-// Habilita o metodo CORS 
+// Habilita o metodo CORS
 app.UseCors("AllowAll");
 
 app.UseCors();
@@ -211,6 +211,7 @@ app.MapPut(
         if (torneio is null)
             return Results.NotFound();
         torneio.Nome = input.Nome;
+        torneio.PartidaIds = input.PartidaIds ?? new List<int>();
         await db.SaveChangesAsync();
         return Results.Ok(torneio);
     }

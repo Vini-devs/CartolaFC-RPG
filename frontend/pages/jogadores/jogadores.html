@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Consultar Jogadores - Cartola FC RPG</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link href="../../assets/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav id="navbar-container"></nav>
+    <script>
+      fetch("../../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar-container").innerHTML = data;
+        });
+    </script>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Jogadores</h2>
+        <a href="criar-jogador.html" class="btn btn-primary">Novo Jogador</a>
+      </div>
+      <div id="jogadores-list"></div>
+    </div>
+    <script src="../../assets/js/script-jogadores.js"></script>
+    <script>
+      loadJogadoresList();
+    </script>
+  </body>
+</html>

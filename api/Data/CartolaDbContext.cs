@@ -9,4 +9,5 @@ public class CartolaDbContext : DbContext
     public DbSet<Jogador> Jogadores { get; set; }
     public DbSet<Partida> Partidas { get; set; }
     public DbSet<Torneio> Torneios { get; set; }
+    public DbSet<Eliminatoria> Eliminatorias { get; set; }
 }

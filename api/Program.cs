@@ -230,4 +230,56 @@ app.MapDelete(
     }
 );
 
+// *******************************
+// Endpoints Eliminatorias
+// *******************************
+app.MapGet("/eliminatorias", async (CartolaDbContext db) => await db.Eliminatorias.ToListAsync());
+
+app.MapGet(
+    "/eliminatorias/{id}",
+    async (int id, CartolaDbContext db) =>
+    {
+        var eliminatoria = await db.Eliminatorias.FindAsync(id);
+        return eliminatoria is not null ? Results.Ok(eliminatoria) : Results.NotFound();
+    }
+);
+
+app.MapPost(
+    "/eliminatorias",
+    async (Eliminatoria eliminatoria, CartolaDbContext db) =>
+    {
+        db.Eliminatorias.Add(eliminatoria);
+        await db.SaveChangesAsync();
+        return Results.Created($"/eliminatorias/{eliminatoria.Id}", eliminatoria);
+    }
+);
+
+app.MapPut(
+    "/eliminatorias/{id}",
+    async (int id, Eliminatoria input, CartolaDbContext db) =>
+    {
+        var eliminatoria = await db.Eliminatorias.FindAsync(id);
+        if (eliminatoria is null)
+            return Results.NotFound();
+        eliminatoria.TorneioId = input.TorneioId;
+        eliminatoria.PartidaId = input.PartidaId;
+        eliminatoria.ProximaEliminatoriaId = input.ProximaEliminatoriaId;
+        await db.SaveChangesAsync();
+        return Results.Ok(eliminatoria);
+    }
+);
+
+app.MapDelete(
+    "/eliminatorias/{id}",
+    async (int id, CartolaDbContext db) =>
+    {
+        var eliminatoria = await db.Eliminatorias.FindAsync(id);
+        if (eliminatoria is null)
+            return Results.NotFound();
+        db.Eliminatorias.Remove(eliminatoria);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+);
+
 app.Run();
